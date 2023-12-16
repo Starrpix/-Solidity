@@ -1,0 +1,31 @@
+{
+  "name": "solidity",
+  "version": "1.0.0",
+  "description": "Creating Smart Contracts",
+  "main": "index.js",
+  "scripts": {
+    "test": "yes"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Starrpix/-Solidity.git"
+  },
+  "keywords": [
+    "solidity",
+    "smart",
+    "contracts",
+    "blockchain",
+    "decentralized",
+    "finance",
+    "ethereum"
+  ],
+  "author": "Starrpix",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Starrpix/-Solidity/issues"
+  },
+  "homepage": "https://github.com/Starrpix/-Solidity#readme",
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.0.1"
+  }
+}
