@@ -1,42 +1,50 @@
 //SPDX-License-Identifier: MIT
-pragma solidity ^0.8.10;
+pragma solidity ^0.8.23;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contact Election is Ownable{
-struct candidate{
-    string name;
-    uint index;
-    uint votecount;
-}
-candidate c;
-struct voter{
-    string name;
-    bool voted;
-}
-voter v;
+contract Election is Ownable {
+    struct Candidate {
+        string name;
+        uint index;
+        uint votecount;
+    }
 
-mapping(uint => candidate) candidates;
-mapping(uint => voters) voters;
+    struct Voter {
+        string name;
+        uint index;
+        bool voted;
+    }
 
-constructor candidate_info(uint[] memory _index ,string[] memory _name,uint[] _votecount) candidates{
-    //Since we are intializing only
-   candidates[1] = candidate("Rahul",1,0);
-   candidates[2] = candidate("Priya",2,0);
+    mapping(uint => Candidate) public candidates;
+    mapping(address => Voter) public voters;
 
-}
+    constructor(uint[] memory _index , string[] memory _name , uint[] memory _votecount) {
+        // Since we are initializing only
+        candidates[1] = Candidate("Rahul", 1, 0);
+        candidates[2] = Candidate("Priya", 2, 0);
+    }
 
-function vote(string memory voter_name,uint candidate_index) external{
-   
-    for(uint i=0;i<candidate_index.length;i++){
-     require(!voters[msg.sender],"You have voted already");
-     voters[i] = voter([voter_name],[candidate_index],[c.votecount++]);
+    function vote(string memory voter_name, uint candidate_index) external {
+        // hasn't voted
+        require(!voters[msg.sender].voted, "You have voted already");
+
+        // has voted
+        voters[msg.sender] = Voter({name: voter_name, index: candidate_index, voted: true});
+
+        candidates[candidate_index].votecount += 1;
+    }
+
+    function getwinner() public view onlyOwner returns(uint) {
+        uint maxVotes = 0;
+        uint winnerIndex;
+
+        for (uint i = 1; i <= 2; i++) {
+            if (candidates[i].votecount > maxVotes) {
+                maxVotes = candidates[i].votecount;
+                winnerIndex = i;
+            }  
+        }
+        return winnerIndex;
     }
 }
-
-function getwinner() public onlyOwner returns(uint) {
-
-}
-
-}
-
