@@ -1,9 +1,9 @@
 //SPDX-License-Identifier: MIT
-pragma solidity ^0.8.23;
+pragma solidity ^0.8.10;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract Election is Ownable {
+contract Election is Ownable(msg.sender) {
     struct Candidate {
         string name;
         uint index;
@@ -19,7 +19,7 @@ contract Election is Ownable {
     mapping(uint => Candidate) public candidates;
     mapping(address => Voter) public voters;
 
-    constructor(uint[] memory _index , string[] memory _name , uint[] memory _votecount) {
+    constructor() {
         // Since we are initializing only
         candidates[1] = Candidate("Rahul", 1, 0);
         candidates[2] = Candidate("Priya", 2, 0);
