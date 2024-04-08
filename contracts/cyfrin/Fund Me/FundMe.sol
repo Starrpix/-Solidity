@@ -25,6 +25,22 @@ function withdraw() public{
           addressToAmountFunded[funder] = 0;
 
      }
+
+     //reset the array 
+     funders = new address[](0);
+     //actually withdraw the funds
+
+     //transfer 
+     // msg.sender = address
+     // payable(msg.sender) = payable address , typecasting 
+     payable(msg.sender).transfer(address(this).balance);
+     //send
+    bool success = payable(msg.sender).send(address(this).balance);
+    require (success,"Send Failed");
+     //call
+    (bool callSuccess,) = payable(msg.sender).call{value: address(this).balance}("");
+    require (callSuccess,"Call Failed");
+
 }
 
 }
